@@ -11,42 +11,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+
 @Controller
 public class AuthController {
 
     private final UserService userService;
-    private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserService userService, CustomUserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public AuthController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
-        this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
 
-
-    @PostMapping("/loginUser")
-    public String login(@RequestParam String username, @RequestParam String password) {
-        User user = userService.findByUsername(username);
-
-        if (user == null) {
-            userDetailsService.trackFailedLogin(username);
-            return "Wrong username!";
-        }
-
-
-        if (user.isLocked()) {
-            return "Account has been locked!";
-        }
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            userDetailsService.trackFailedLogin(username);
-            return "Wrong password!";
-        }
-
-        userDetailsService.resetFailedAttempts(user);
-        return "dashboard";
-    }
 
     @GetMapping("/login")
     public String loginPage() {
@@ -54,12 +31,20 @@ public class AuthController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboardPage() {
+    public String dashboardPage(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
+
+        System.out.println("username: " + username);
+
+        model.addAttribute("username", username);
+        model.addAttribute("lastFailedLogin", user.getLastFailedLogin());
+        model.addAttribute("lastSuccessfulLogin", user.getLastSuccessfulLogin());
         return "dashboard";
     }
 
     @GetMapping("/logout")
-    public String logout() {
+    public String logout(){
         return "login";
     }
 

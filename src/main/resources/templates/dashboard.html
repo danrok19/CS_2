@@ -5,6 +5,17 @@
     <title>yuuup</title>
 </head>
 <body>
-<button th:action="@{/logout}">Wyloguj się</button>
+<h1>Welcome</h1>
+<div>
+    <h3 th:text="${username}"> info</h3>
+    <p>Data ostatniego nieudanego logowania: </p>
+    <span th:text="${lastFailedLogin}"></span>
+    <p>data ostatniego udanego logowania: </p>
+    <span th:text="${lastSuccessfulLogin}"></span>
+
+</div>
+<form th:action="@{/logout}" method="get">
+    <button type="submit">Wyloguj</button>
+</form>
 </body>
 </html>

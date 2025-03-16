@@ -21,7 +21,7 @@
 
     <!-- Obsługa komunikatów o błędach -->
     <div class="error-message">
-        <p th:if="${param.error}">Nieprawidłowa nazwa użytkownika lub hasło.</p>
+        <p th:if="${param.error}" th:text="${errorMessage}"></p>
         <p th:if="${param.logout}">Zostałeś wylogowany.</p>
     </div>
 

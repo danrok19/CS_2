@@ -27,12 +27,13 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String username = request.getParameter("username");
         User user = userService.findByUsername(username);
 
-        System.out.println("Successfully logged in: " + username);
-
         if (user != null) {
             user.setFailedAttempts(0);
             user.setLastSuccessfulLogin(LocalDateTime.now());
+            user.setLockTime(null);
             userRepository.save(user);
         }
+
+        response.sendRedirect("/dashboard");
     }
 }

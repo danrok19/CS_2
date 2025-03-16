@@ -30,7 +30,8 @@ public class SecurityConfig {
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/dashboard", true)
+                        .defaultSuccessUrl("/dashboard")
+                        .failureUrl("/login?error=true")
                         .failureHandler(loginFailureHandler)
                         .successHandler(loginSuccessHandler)
                         .permitAll()
@@ -40,7 +41,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login")
                         .permitAll()
                 ).csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/login", "/dashboard")
+                        .ignoringRequestMatchers("/login", "/dashboard", "/login?error")
                 );
 
         return http.build();

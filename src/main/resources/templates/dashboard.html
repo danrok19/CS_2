@@ -10,9 +10,22 @@
     <h3 th:text="${username}"> info</h3>
     <p>Data ostatniego nieudanego logowania: </p>
     <span th:text="${lastFailedLogin}"></span>
-    <p>data ostatniego udanego logowania: </p>
+    <p>Data ostatniego udanego logowania: </p>
     <span th:text="${lastSuccessfulLogin}"></span>
 
+</div>
+
+<div>
+    <h3>Włącz system blokowania konta?</h3>
+    <form th:action="@{/updateAccountSettings}" method="post">
+        <label for="lockAccount">Włącz system blokowania po nieudanych próbach logowania:</label>
+        <select name="lockAccount" id="lockAccount">
+            <option value="true">Tak</option>
+            <option value="false">Nie</option>
+        </select>
+
+        <button type="submit">Zapisz zmiany</button>
+    </form>
 </div>
 <form th:action="@{/logout}" method="get">
     <button type="submit">Wyloguj</button>

@@ -30,6 +30,8 @@ public class User {
 
     private LocalDateTime lastFailedLogin;
 
+    private boolean lockAccount = false;
+
     public User(){}
 
     public User(String username, String password) {
@@ -99,6 +101,14 @@ public class User {
 
     public void setLastFailedLogin(LocalDateTime lastFailedLogin) {
         this.lastFailedLogin = lastFailedLogin;
+    }
+
+    public boolean isLockAccount() {
+        return lockAccount;
+    }
+
+    public void setLockAccount(boolean lockAccount) {
+        this.lockAccount = lockAccount;
     }
 
     @Override

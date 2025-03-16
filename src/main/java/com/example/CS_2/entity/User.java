@@ -12,25 +12,25 @@ public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long id; // identyfikator
 
     @Column(name = "username")
-    private String username;
+    private String username; // nazwa uzytkownika
 
     @Column(name = "password")
-    private String password;
+    private String password; // haslo
 
-    private boolean locked = false;
+    private boolean locked = false; // czy konto ma temp zablokowane logowanie
 
-    private int failedAttempts = 0;
+    private int failedAttempts = 0; // liczba ostatnich nieudanych logowan z kolei
 
-    private LocalDateTime lockTime;
+    private LocalDateTime lockTime; // czas do kiedy jest zablokowane logowanie uzytkownika
 
-    private LocalDateTime lastSuccessfulLogin;
+    private LocalDateTime lastSuccessfulLogin; // ostatnie udane logowanie
 
-    private LocalDateTime lastFailedLogin;
+    private LocalDateTime lastFailedLogin; // ostatnie nieudane logowanie
 
-    private boolean lockAccount = false;
+    private boolean lockAccount = false; // czy uzytkownik wybral system blokowania
 
     public User(){}
 

@@ -60,6 +60,9 @@ public class CustomUserDetailsService implements UserDetailsService {
             UnknownUser unknownUser = new UnknownUser(username, LocalDateTime.now());
             unknownUserRepository.save(unknownUser);
             System.out.println("Exception we got : " + e.getMessage());
+            throw new UsernameNotFoundException(e.getMessage());
+        } catch (LockedException e){
+            httpSession.setAttribute("locked", "true"); // using session to inform loginfailhand that its locked
         }
 
 

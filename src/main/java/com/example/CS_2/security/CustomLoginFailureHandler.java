@@ -3,6 +3,7 @@ package com.example.CS_2.security;
 import com.example.CS_2.dao.UserRepository;
 import com.example.CS_2.entity.User;
 import com.example.CS_2.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Component
 public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
@@ -33,9 +35,16 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         String username = request.getParameter("username");
-        User user = userService.findByUsername(username);
-        String errorMessage = "Niepoprawne dane logowania.";
+        User user = null;
 
+        try {
+            Optional<User> userOpt = userRepository.findByUsername(username);
+            user = userOpt.orElseThrow(EntityNotFoundException::new);
+        } catch (EntityNotFoundException e) {
+            System.out.println("Exception we found: " + e.getMessage());
+        }
+
+        String errorMessage = "Niepoprawne dane logowania.";
         String locked = (String) session.getAttribute("locked");
 
         // if the user passed only wrong password

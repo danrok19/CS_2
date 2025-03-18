@@ -23,6 +23,11 @@
             <option value="true">Tak</option>
             <option value="false">Nie</option>
         </select>
+        <br>
+        <label for="allowedLoginAttempts">Liczba mozliwych prób logowania:</label>
+        <select name="allowedLoginAttempts" id="allowedLoginAttempts">
+            <option th:each="i : ${#numbers.sequence(1,9)}" th:value="${i}" th:text="${i}"></option>
+        </select>
 
         <button type="submit">Zapisz zmiany</button>
     </form>

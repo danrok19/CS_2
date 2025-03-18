@@ -19,7 +19,7 @@
         <button type="submit">Zaloguj się</button>
     </form>
 
-    <!-- Obsługa komunikatów o błędach -->
+    <!-- errors panel display -->
     <div class="error-message">
         <p th:if="${param.error}" th:text="${errorMessage}"></p>
         <p th:if="${param.logout}">Zostałeś wylogowany.</p>

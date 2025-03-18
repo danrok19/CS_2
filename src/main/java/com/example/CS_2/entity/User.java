@@ -24,13 +24,15 @@ public class User {
 
     private int failedAttempts = 0; // liczba ostatnich nieudanych logowan z kolei
 
-    private LocalDateTime lockTime; // czas do kiedy jest zablokowane logowanie uzytkownika
+    private LocalDateTime lockTime = LocalDateTime.now(); // czas do kiedy jest zablokowane logowanie uzytkownika
 
     private LocalDateTime lastSuccessfulLogin; // ostatnie udane logowanie
 
     private LocalDateTime lastFailedLogin; // ostatnie nieudane logowanie
 
     private boolean lockAccount = false; // czy uzytkownik wybral system blokowania
+
+    private int allowedLoginAttempts = 5; // liczba prob logowan bez blokowania konta
 
     public User(){}
 
@@ -109,6 +111,14 @@ public class User {
 
     public void setLockAccount(boolean lockAccount) {
         this.lockAccount = lockAccount;
+    }
+
+    public int getAllowedLoginAttempts() {
+        return allowedLoginAttempts;
+    }
+
+    public void setAllowedLoginAttempts(int allowedLoginAttempts) {
+        this.allowedLoginAttempts = allowedLoginAttempts;
     }
 
     @Override

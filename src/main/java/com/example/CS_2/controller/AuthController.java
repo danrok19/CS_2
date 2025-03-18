@@ -55,10 +55,14 @@ public class AuthController {
     }
 
     @PostMapping("/updateAccountSettings")
-    public String updateAccountSettings(@RequestParam boolean lockAccount, Principal principal) {
+    public String updateAccountSettings(@RequestParam boolean lockAccount,
+                                        @RequestParam("allowedLoginAttempts") int allowedLoginAttempts,
+                                        Principal principal) {
+        System.out.println("allowedLoginAttempts: " + allowedLoginAttempts);
         String username = principal.getName();
         User user = userService.findByUsername(username);
         user.setLockAccount(lockAccount);
+        user.setAllowedLoginAttempts(allowedLoginAttempts);
         userService.save(user);
         return "redirect:/dashboard";
     }

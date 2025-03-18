@@ -62,9 +62,9 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
 
                 if (user.isLockAccount()){
                     user.setLockTime(LocalDateTime.now().plusMinutes(user.getFailedAttempts()));
-                    errorMessage = "Niepoprawne hasło. Liczba prób: " + user.getFailedAttempts() + "/" + MAX_FAILED_ATTEMPTS;
+                    errorMessage = "Niepoprawne hasło. Liczba prób: " + user.getFailedAttempts() + "/" + user.getAllowedLoginAttempts();
 
-                    if (user.getFailedAttempts() >= MAX_FAILED_ATTEMPTS) {
+                    if (user.getFailedAttempts() >= user.getAllowedLoginAttempts()) {
                         user.setLocked(true);
                         LocalDateTime unlockTime = LocalDateTime.now().plusMinutes(99999);
                         user.setLockTime(unlockTime);
